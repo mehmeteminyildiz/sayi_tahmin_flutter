@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:sayi_tahmin/SonucEkrani.dart';
 
 class OyunEkrani extends StatefulWidget {
   int oyunSeviyesi;
@@ -17,6 +18,7 @@ class _OyunEkraniState extends State<OyunEkrani> {
   var tfcTahmin = TextEditingController();
   var ipucu = "";
   var rastgeleSayi = 0;
+  int yapilan_tahmin_sayisi = 0;
 
   @override
   void initState() {
@@ -71,17 +73,28 @@ class _OyunEkraniState extends State<OyunEkrani> {
                       setState(() {
                         int oyuncuTahmini =
                             int.parse(tfcTahmin.text.toString());
+                        yapilan_tahmin_sayisi++;
 
                         if (oyuncuTahmini == rastgeleSayi) {
                           print("BİLDİNİZ!!");
                           setState(() {
                             kalanHak--;
                           });
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SonucEkrani(
+                                      true, yapilan_tahmin_sayisi)));
                         } else {
                           setState(() {
                             kalanHak--;
                             if (kalanHak <= 0) {
                               print("oyunu kaybettin");
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SonucEkrani(
+                                          false, yapilan_tahmin_sayisi)));
                             }
                           });
                         }

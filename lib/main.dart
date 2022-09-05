@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           seciliToggleIndex; // 0: kolay   1: orta   2: zor
                       var isim = tfcAd.text.toString();
                       print("oyunSeviyesi: $oyunSeviyesi\nisim: $isim");
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
