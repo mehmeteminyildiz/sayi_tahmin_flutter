@@ -101,7 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => OyunEkrani()));
+                              builder: (context) =>
+                                  OyunEkrani(oyunSeviyesi, isim)));
                     },
                     child: Text("Başla"),
                     style: ElevatedButton.styleFrom(

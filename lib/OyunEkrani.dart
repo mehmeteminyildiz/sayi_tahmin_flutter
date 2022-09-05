@@ -1,17 +1,48 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class OyunEkrani extends StatefulWidget {
-  const OyunEkrani({Key? key}) : super(key: key);
+  int oyunSeviyesi;
+  String isim;
+
+  OyunEkrani(this.oyunSeviyesi, this.isim);
 
   @override
   State<OyunEkrani> createState() => _OyunEkraniState();
 }
 
 class _OyunEkraniState extends State<OyunEkrani> {
-  var kalanHak = 10;
+  var kalanHak = 0;
   var tfcTahmin = TextEditingController();
+  var ipucu = "";
+  var rastgeleSayi = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    print("initstate");
+    var gelenSeviye = widget.oyunSeviyesi;
+    var gelenIsim = widget.isim;
+
+    rastgeleSayi = Random().nextInt(100);
+    print("oluşturduğumuz sayı: $rastgeleSayi");
+
+    if (gelenSeviye == 0) {
+      // kolay seviye... hak = 10 yapalım
+      kalanHak = 10;
+    } else if (gelenSeviye == 1) {
+      // orta seviye... hak = 7 olsun
+      kalanHak = 7;
+    } else {
+      // zor seviye
+      kalanHak = 3;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("build");
     return Scaffold(
       body: Center(
         child: CustomScrollView(
@@ -28,7 +59,7 @@ class _OyunEkraniState extends State<OyunEkrani> {
                     child: TextField(
                       controller: tfcTahmin,
                       decoration: InputDecoration(
-                        labelText: "Adınız",
+                        labelText: "Tahmininiz",
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red, width: 5.0),
                         ),
@@ -36,19 +67,34 @@ class _OyunEkraniState extends State<OyunEkrani> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        int oyuncuTahmini =
+                            int.parse(tfcTahmin.text.toString());
+
+                        if (oyuncuTahmini == rastgeleSayi) {
+                          print("BİLDİNİZ!!");
+                          setState(() {
+                            kalanHak--;
+                          });
+                        } else {
+                          setState(() {
+                            kalanHak--;
+                            if (kalanHak <= 0) {
+                              print("oyunu kaybettin");
+                            }
+                          });
+                        }
+
+                        print("oyuncu tahmini : $oyuncuTahmini");
+                      });
+                    },
                     child: Text("Tamam"),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(200, 50),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Yeni Button"),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(200, 50),
-                    ),
-                  ),
+                  Text("$ipucu"),
                 ],
               ),
             )
