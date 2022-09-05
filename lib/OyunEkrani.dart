@@ -42,6 +42,13 @@ class _OyunEkraniState extends State<OyunEkrani> {
                       minimumSize: Size(200, 50),
                     ),
                   ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Yeni Button"),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(200, 50),
+                    ),
+                  ),
                 ],
               ),
             )
